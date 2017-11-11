@@ -7,7 +7,7 @@ $(EXE): $(OBJ)
 	$(CXX) $(OBJ) -o $@
 
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $<
+	$(CXX) $(CXXFLAGS) -std=c++11 -c $<
 
 
 -include $(OBJ:.o=.d)

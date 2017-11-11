@@ -36,7 +36,7 @@ int main(int argc, char** argv){
 
 int* get_configuration(string config_filename){
   string token;
-  int numbers[52];
+  static int numbers[52];
   ifstream in_stream(config_filename.c_str());
 
   int n = 0;
@@ -89,7 +89,7 @@ bool contains_valid_indexes(string config_filename){
   ifstream in_stream(config_filename.c_str());
 
   while(getline(in_stream, token, ' ')) {
-    if (!(0 <= stoi(token) <= 25)){
+    if (!((stoi(token) >= 0) && (stoi(token) <= 25))){
       return false;
     }
   }
