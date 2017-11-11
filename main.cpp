@@ -26,6 +26,10 @@ int main(int argc, char** argv){
     }
   }
   // specific checks for configuration files
+  if (!valid_plugboard_config(config_filename)){
+
+  }
+
 
   return NO_ERROR;
 }
@@ -33,7 +37,7 @@ int main(int argc, char** argv){
 int* get_configuration(string config_filename){
   string token;
   int numbers[52];
-  ifstream in_stream(config_filename);
+  ifstream in_stream(config_filename.c_str());
 
   int n = 0;
   while(getline(in_stream, token, ' ')) {
@@ -46,7 +50,7 @@ int* get_configuration(string config_filename){
 }
 
 bool can_open_file(string config_filename){
-  ifstream in_stream(config_filename);
+  ifstream in_stream(config_filename.c_str());
 
   if (in_stream.fail())
   {
@@ -69,7 +73,7 @@ bool is_num(string token){
 
 bool contains_only_nums(string config_filename){
   string token;
-  ifstream in_stream(config_filename);
+  ifstream in_stream(config_filename.c_str());
 
   while(getline(in_stream, token, ' ')) {
     if (!is_num(token)){
@@ -82,7 +86,7 @@ bool contains_only_nums(string config_filename){
 
 bool contains_valid_indexes(string config_filename){
   string token;
-  ifstream in_stream(config_filename);
+  ifstream in_stream(config_filename.c_str());
 
   while(getline(in_stream, token, ' ')) {
     if (!(0 <= stoi(token) <= 25)){
