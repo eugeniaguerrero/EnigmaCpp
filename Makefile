@@ -1,5 +1,5 @@
 OBJ = main.o plugboard.o rotor.o reflector.o helper.o
-EXE = engima
+EXE = enigma
 CXX = g++
 CXXFLAGS = -Wall -g -MMD
 
