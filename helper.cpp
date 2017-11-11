@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cassert>
 #include <fstream>
+#include <vector>
 
 #include "errors.h"
 
@@ -15,16 +16,40 @@ int validateParameters(){
   return 0;
 }
 
-int validateConfiguration(string filename){
+int validateConfiguration(string config_filename){
+  vector<int> numbers;
+  int number;
   ifstream in_stream;
-  ofstream out_stream;
 
-  in_stream.open(filename);
+  in_stream.open(config_filename);
   if (in_stream.fail())
   {
+    cout << "Configuration file cannot be opened." << endl;
     return ERROR_OPENING_CONFIGURATION_FILE;
   }
-  return 0;
+
+  while (!in_stream.eof())
+  {
+  // add contents of file into numbers array
+    while (in_stream >> number) {
+      numbers.push_back(number);
+    }
+
+  // check that there is no dup of contacts
+
+
+  // check that there are an even number of numbers
+
+
+  // check that number is between 0 and 25
+
+
+  // check that file only contains numeric characters
+
+
+  }
+  in_stream.close();
+    return NO_ERROR;
 }
 
 int runAssertions() {
