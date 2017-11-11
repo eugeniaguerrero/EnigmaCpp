@@ -36,7 +36,7 @@ int main(int argc, char** argv){
 
 int* get_configuration(string config_filename){
   string token;
-  static int numbers[52];
+  int numbers[52];
   ifstream in_stream(config_filename.c_str());
 
   int n = 0;
@@ -65,7 +65,9 @@ bool can_open_file(string config_filename){
 bool is_num(string token){
   for (int i = 0; i < token.length(); i++) {
     if (!isdigit(token[i])){
-      return false;
+      if (!isspace(token[i])) {
+        return false;
+      }
     }
   }
   return true;
