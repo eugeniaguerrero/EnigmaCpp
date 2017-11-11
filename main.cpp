@@ -26,9 +26,9 @@ int main(int argc, char** argv){
     }
   }
   // specific checks for configuration files
-  if (!valid_plugboard_config(config_filename)){
-
-  }
+  // if (!valid_plugboard_config(config_filename)){
+  //
+  // }
 
 
   return NO_ERROR;
