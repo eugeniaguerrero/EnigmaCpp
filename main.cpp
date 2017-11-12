@@ -33,9 +33,6 @@ int main(int argc, char** argv){
       } else if (ext == "pb" && !contains(stoi(token), numbers, j)) {
         cout << "Impossible plugboard configuration" << endl;
         return IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
-      } else if (ext == "pb" && !valid_plugboard_parameters(token)) {
-        cout << "Incorrect number of plugboard parameters" << endl;
-        return INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS;
       } else if (ext == "rot" && !valid_rotor_mapping(token)){
         cout << "Invalid rotor mapping" << endl;
         return INVALID_ROTOR_MAPPING;
@@ -53,6 +50,10 @@ int main(int argc, char** argv){
       j++;
     }
     in_stream.close();
+    if (ext == "pb" && !valid_plugboard_parameters(j)) {
+      cout << "Incorrect number of plugboard parameters" << endl;
+      return INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS;
+    }
   }
   return NO_ERROR;
 }
@@ -102,8 +103,8 @@ bool contains(int elem, int (&array)[26], int array_size){
   return true;
 }
 
-bool valid_plugboard_parameters(string token){
-  return true;
+bool valid_plugboard_parameters(int size_of_config_array){
+  return size_of_config_array % 2 == 0;
 }
 
 bool valid_rotor_mapping(string token){
