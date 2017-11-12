@@ -11,6 +11,6 @@ bool valid_rf_file(string token);
 string get_extension(string token);
 bool contains(int elem, int (&array)[26], int array_size);
 bool valid_plugboard_parameters(int size_of_config_array);
-bool valid_rotor_mapping(string token);
+bool valid_rotor_mapping(int size_of_config_array);
 bool valid_rotor_start_position(string token);
-bool valid_reflector_parameters(string token);
+bool valid_reflector_parameters(int size_of_config_array);

@@ -26,6 +26,11 @@ int main(int argc, char** argv){
     }
 
     while(getline(in_stream, token, ' ')) {
+      // skip whitespace
+      if (token.length() > 0 && isspace(token[0])) {
+        continue;
+      }
+      // perform checks
       if (!is_num(token) && ext == "pb") {
         cerr << "Non-numeric character in plugboard file " << config_filename << endl;
         return NON_NUMERIC_CHARACTER;
@@ -41,8 +46,8 @@ int main(int argc, char** argv){
       } else if (ext == "pb" && !contains(stoi(token), numbers, j)) {
         cerr << "Incorrect number of parameters in plugboard file " << config_filename << endl;
         return IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
-      } else if (ext == "rot" && !valid_rotor_mapping(token)){
-        cerr << "Invalid rotor mapping" << endl;
+      } else if (ext == "rot" && !contains(stoi(token), numbers, j)){
+        cerr << "Not all inputs mapped in rotor file: " << config_filename << endl;
         return INVALID_ROTOR_MAPPING;
       } else if (ext == "rot" && !valid_rotor_start_position(token)){
         cerr << "No rotor starting position" << endl;
@@ -50,9 +55,6 @@ int main(int argc, char** argv){
       } else if (ext == "rf" && !contains(stoi(token), numbers, j)){
         cerr << "Insufficient number of mappings in reflector file: " << config_filename << endl;
         return INVALID_REFLECTOR_MAPPING;
-      } else if (ext == "rf" && !valid_reflector_parameters(token)){
-        cerr << "Incorrect (odd) number of parameters in reflector file " << config_filename << endl;
-        return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
       }
       numbers[j] = stoi(token);
       j++;
@@ -61,7 +63,14 @@ int main(int argc, char** argv){
     if (ext == "pb" && !valid_plugboard_parameters(j)) {
       cerr << "Incorrect number of parameters in plugboard file " << config_filename << endl;
       return INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS;
+    } else if (ext == "rot" && !valid_rotor_mapping(j)){
+      cerr << "Not all inputs mapped in rotor file: " << config_filename << endl;
+      return INVALID_ROTOR_MAPPING;
+    } else if (ext == "rf" && !valid_reflector_parameters(j)){
+      cerr << "Incorrect (odd) number of parameters in reflector file " << config_filename << endl;
+      return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
     }
+
   }
   return NO_ERROR;
 }
@@ -78,10 +87,8 @@ bool can_open_file(ifstream &in_stream){
 bool is_num(string token){
   for (int i = 0; i < token.length(); i++) {
     if (!isdigit(token[i])){
-      if (!isspace(token[i])) {
         return false;
       }
-    }
   }
   return true;
 }
@@ -115,14 +122,14 @@ bool valid_plugboard_parameters(int size_of_config_array){
   return size_of_config_array % 2 == 0;
 }
 
-bool valid_rotor_mapping(string token){
-  return true;
+bool valid_rotor_mapping(int size_of_config_array){
+  return size_of_config_array == 26;
 }
 
 bool valid_rotor_start_position(string token){
   return true;
 }
 
-bool valid_reflector_parameters(string token){
-  return true;
+bool valid_reflector_parameters(int size_of_config_array){
+  return size_of_config_array == 26;
 }
