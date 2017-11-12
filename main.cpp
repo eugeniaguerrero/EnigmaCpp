@@ -66,8 +66,11 @@ int main(int argc, char** argv){
     } else if (ext == "rot" && !valid_rotor_mapping(j)){
       cerr << "Not all inputs mapped in rotor file: " << config_filename << endl;
       return INVALID_ROTOR_MAPPING;
-    } else if (ext == "rf" && !valid_reflector_parameters(j)){
+    } else if (ext == "rf" && !valid_reflector_parameters(j) && j % 2 != 0){
       cerr << "Incorrect (odd) number of parameters in reflector file " << config_filename << endl;
+      return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
+    } else if (ext == "rf" && !valid_reflector_parameters(j)){
+      cerr << "Insufficient number of mappings in reflector file: " << config_filename << endl;
       return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
     }
 
