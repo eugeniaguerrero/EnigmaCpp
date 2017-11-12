@@ -30,7 +30,7 @@ int main(int argc, char** argv){
         cerr << "Non-numeric character in plugboard file " << config_filename << endl;
         return NON_NUMERIC_CHARACTER;
       } else if (!is_num(token) && ext == "rot") {
-        cerr << "Non-numeric character in rotor file " << config_filename << endl;
+        cerr << "Non-numeric character for mapping in rotor file " << config_filename << endl;
         return NON_NUMERIC_CHARACTER;
       } else if (!is_num(token) && ext == "rf") {
         cerr << "Non-numeric character in reflector file " << config_filename << endl;
@@ -39,7 +39,7 @@ int main(int argc, char** argv){
         cerr << "Configuration file contains an invalid index" << endl;
         return INVALID_INDEX;
       } else if (ext == "pb" && !contains(stoi(token), numbers, j)) {
-        cerr << "Impossible plugboard configuration" << endl;
+        cerr << "Incorrect number of parameters in plugboard file " << config_filename << endl;
         return IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
       } else if (ext == "rot" && !valid_rotor_mapping(token)){
         cerr << "Invalid rotor mapping" << endl;
@@ -48,10 +48,10 @@ int main(int argc, char** argv){
         cerr << "No rotor starting position" << endl;
         return NO_ROTOR_STARTING_POSITION;
       } else if (ext == "rf" && !contains(stoi(token), numbers, j)){
-        cerr << "Invalid reflector mapping" << endl;
+        cerr << "Insufficient number of mappings in reflector file: " << config_filename << endl;
         return INVALID_REFLECTOR_MAPPING;
       } else if (ext == "rf" && !valid_reflector_parameters(token)){
-        cerr << "Incorrect number of parameters in reflector file " << config_filename << endl;
+        cerr << "Incorrect (odd) number of parameters in reflector file " << config_filename << endl;
         return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
       }
       numbers[j] = stoi(token);
