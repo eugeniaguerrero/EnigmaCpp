@@ -5,6 +5,7 @@ bool can_open_file(ifstream &in_stream);
 bool is_num(string token);
 bool valid_index(string token);
 // specific checks for configuration files
+void remove_whitespace(string &token);
 bool valid_pb_file(string token);
 bool valid_rot_file(string token);
 bool valid_rf_file(string token);

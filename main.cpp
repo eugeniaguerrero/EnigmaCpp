@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <algorithm>
 #include "errors.h"
 #include "main.h"
 
@@ -26,10 +27,8 @@ int main(int argc, char** argv){
     }
 
     while(getline(in_stream, token, ' ')) {
-      // skip whitespace
-      if (token.length() > 0 && isspace(token[0])) {
-        continue;
-      }
+      // remove whitespace
+      remove_whitespace(token);
       // perform checks
       if (!is_num(token) && ext == "pb") {
         cerr << "Non-numeric character in plugboard file " << config_filename << endl;
@@ -78,6 +77,10 @@ int main(int argc, char** argv){
   return NO_ERROR;
 }
 
+void remove_whitespace(string &token) {
+  token.erase(remove_if(token.begin(), token.end(), ::isspace), token.end());
+}
+
 bool can_open_file(ifstream &in_stream){
   if (in_stream.fail())
   {
@@ -90,8 +93,9 @@ bool can_open_file(ifstream &in_stream){
 bool is_num(string token){
   for (int i = 0; i < token.length(); i++) {
     if (!isdigit(token[i])){
-        return false;
-      }
+      cout << "Failing for " << token[i] << " in " << token << endl;
+      return false;
+    }
   }
   return true;
 }
