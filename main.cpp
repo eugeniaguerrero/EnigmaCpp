@@ -20,12 +20,20 @@ int main(int argc, char** argv){
     int numbers[26];
 
     ifstream in_stream(config_filename.c_str());
+    if (!can_open_file(in_stream)){
+      cerr << "Configuration file cannot be opened" << endl;
+      return ERROR_OPENING_CONFIGURATION_FILE;
+    }
+
     while(getline(in_stream, token, ' ')) {
-      if (!can_open_file(in_stream)){
-        cerr << "Configuration file cannot be opened" << endl;
-        return ERROR_OPENING_CONFIGURATION_FILE;
-      } if (!is_num(token)) {
-        cerr << "Configuration file does not contain only numbers" << endl;
+      if (!is_num(token) && ext == "pb") {
+        cerr << "Non-numeric character in plugboard file " << config_filename << endl;
+        return NON_NUMERIC_CHARACTER;
+      } else if (!is_num(token) && ext == "rot") {
+        cerr << "Non-numeric character in rotor file " << config_filename << endl;
+        return NON_NUMERIC_CHARACTER;
+      } else if (!is_num(token) && ext == "rf") {
+        cerr << "Non-numeric character in reflector file " << config_filename << endl;
         return NON_NUMERIC_CHARACTER;
       } else if (!valid_index(token)){
         cerr << "Configuration file contains an invalid index" << endl;
@@ -43,7 +51,7 @@ int main(int argc, char** argv){
         cerr << "Invalid reflector mapping" << endl;
         return INVALID_REFLECTOR_MAPPING;
       } else if (ext == "rf" && !valid_reflector_parameters(token)){
-        cerr << "Incorrect number of reflector parameters" << endl;
+        cerr << "Incorrect number of parameters in reflector file " << config_filename << endl;
         return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
       }
       numbers[j] = stoi(token);
@@ -51,7 +59,7 @@ int main(int argc, char** argv){
     }
     in_stream.close();
     if (ext == "pb" && !valid_plugboard_parameters(j)) {
-      cerr << "Incorrect number of plugboard parameters" << endl;
+      cerr << "Incorrect number of parameters in plugboard file " << config_filename << endl;
       return INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS;
     }
   }
