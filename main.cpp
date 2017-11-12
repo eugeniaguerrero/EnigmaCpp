@@ -93,7 +93,6 @@ bool can_open_file(ifstream &in_stream){
 bool is_num(string token){
   for (int i = 0; i < token.length(); i++) {
     if (!isdigit(token[i])){
-      cout << "Failing for " << token[i] << " in " << token << endl;
       return false;
     }
   }
