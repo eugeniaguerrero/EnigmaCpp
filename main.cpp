@@ -8,7 +8,7 @@ using namespace std;
 
 int main(int argc, char** argv){
   if (!(argc >= 3)) {
-    cout << "Insufficient number of parameters" << endl;
+    cerr << "Insufficient number of parameters" << endl;
     return INSUFFICIENT_NUMBER_OF_PARAMETERS;
   }
 
@@ -22,28 +22,28 @@ int main(int argc, char** argv){
     ifstream in_stream(config_filename.c_str());
     while(getline(in_stream, token, ' ')) {
       if (!can_open_file(in_stream)){
-        cout << "Configuration file cannot be opened" << endl;
+        cerr << "Configuration file cannot be opened" << endl;
         return ERROR_OPENING_CONFIGURATION_FILE;
       } if (!is_num(token)) {
-        cout << "Configuration file does not contain only numbers" << endl;
+        cerr << "Configuration file does not contain only numbers" << endl;
         return NON_NUMERIC_CHARACTER;
       } else if (!valid_index(token)){
-        cout << "Configuration file contains an invalid index" << endl;
+        cerr << "Configuration file contains an invalid index" << endl;
         return INVALID_INDEX;
       } else if (ext == "pb" && !contains(stoi(token), numbers, j)) {
-        cout << "Impossible plugboard configuration" << endl;
+        cerr << "Impossible plugboard configuration" << endl;
         return IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
       } else if (ext == "rot" && !valid_rotor_mapping(token)){
-        cout << "Invalid rotor mapping" << endl;
+        cerr << "Invalid rotor mapping" << endl;
         return INVALID_ROTOR_MAPPING;
       } else if (ext == "rot" && !valid_rotor_start_position(token)){
-        cout << "No rotor starting position" << endl;
+        cerr << "No rotor starting position" << endl;
         return NO_ROTOR_STARTING_POSITION;
       } else if (ext == "rf" && !contains(stoi(token), numbers, j)){
-        cout << "Invalid reflector mapping" << endl;
+        cerr << "Invalid reflector mapping" << endl;
         return INVALID_REFLECTOR_MAPPING;
       } else if (ext == "rf" && !valid_reflector_parameters(token)){
-        cout << "Incorrect number of reflector parameters" << endl;
+        cerr << "Incorrect number of reflector parameters" << endl;
         return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
       }
       numbers[j] = stoi(token);
@@ -51,7 +51,7 @@ int main(int argc, char** argv){
     }
     in_stream.close();
     if (ext == "pb" && !valid_plugboard_parameters(j)) {
-      cout << "Incorrect number of plugboard parameters" << endl;
+      cerr << "Incorrect number of plugboard parameters" << endl;
       return INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS;
     }
   }
@@ -61,7 +61,7 @@ int main(int argc, char** argv){
 bool can_open_file(ifstream &in_stream){
   if (in_stream.fail())
   {
-    cout << "Configuration file cannot be opened." << endl;
+    cerr << "Configuration file cannot be opened." << endl;
     return false;
   }
   return true;
