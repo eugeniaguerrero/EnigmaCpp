@@ -60,16 +60,16 @@ int main(int argc, char** argv){
       } else if (!valid_index(index)){
         cerr << "Configuration file contains an invalid index" << endl;
         return INVALID_INDEX;
-      } else if (ext == "pb" && !contains(index, numbers)) {
+      } else if (ext == "pb" && contains(index, numbers)) {
         cerr << "Incorrect number of parameters in plugboard file " << config_filename << endl;
         return IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
-      } else if (ext == "rot" && !contains(index, numbers)){
+      } else if (ext == "rot" && contains(index, numbers) && numbers.size() <= 26){
         cerr << "Not all inputs mapped in rotor file: " << config_filename << endl;
         return INVALID_ROTOR_MAPPING;
       } else if (ext == "rot" && !valid_rotor_start_position(index)){
         cerr << "No rotor starting position" << endl;
         return NO_ROTOR_STARTING_POSITION;
-      } else if (ext == "rf" && !contains(index, numbers)){
+      } else if (ext == "rf" && contains(index, numbers)){
         cerr << "Insufficient number of mappings in reflector file: " << config_filename << endl;
         return INVALID_REFLECTOR_MAPPING;
       }
@@ -81,7 +81,7 @@ int main(int argc, char** argv){
     if (ext == "pb" && !valid_plugboard_parameters(numbers.size())) {
       cerr << "Incorrect number of parameters in plugboard file " << config_filename << endl;
       return INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS;
-    } else if (ext == "rot" && !valid_rotor_mapping(numbers.size())){
+    } else if (ext == "rot" && !valid_rotor_mapping(numbers)){
       cerr << "Not all inputs mapped in rotor file: " << config_filename << endl;
       return INVALID_ROTOR_MAPPING;
     } else if (ext == "rf" && (numbers.size() % 2 != 0)){
@@ -137,24 +137,53 @@ string get_extension(string config_filename){
 bool contains(int elem, vector<int> numbers){
   for (int i = 0; i < numbers.size(); i++) {
     if (numbers[i] == elem) {
-      return false;
+      return true;
     }
   }
-  return true;
+  return false;
 }
 
 bool valid_plugboard_parameters(int size_of_config_array){
   return size_of_config_array % 2 == 0;
 }
 
-bool valid_rotor_mapping(int size_of_config_array){
-  return size_of_config_array == 26;
+bool valid_rotor_mapping(vector<int> numbers){
+  if (numbers.size() < 26) {
+    return false;
+  } else if (numbers.size() > 52) {
+    return false;
+  } else {
+    vector<int> mappings(numbers.begin(), numbers.begin() + 26);
+    vector<int> notches(numbers.begin() + 26, numbers.end());
+    return !contains_duplicates(mappings) && !contains_duplicates(notches);
+  }
 }
 
 bool valid_rotor_start_position(int index){
   return true;
 }
 
+// both have to be unique and cannot overflow
 bool valid_reflector_parameters(int size_of_config_array){
   return size_of_config_array == 26;
+}
+
+bool contains_duplicates(vector<int> numbers) {
+  vector<int> seen;
+  for (int i = 0; i < numbers.size(); i++) {
+    if (contains(numbers[i], seen)) {
+      return false;
+    } else {
+      seen.push_back(numbers[i]);
+    }
+  }
+  return true;
+}
+
+void print_vector(vector<int> numbers) {
+  cout << "[ ";
+  for (int i = 0; i < numbers.size(); i++) {
+    cout << numbers[i] << " ";
+  }
+  cout << "]" << endl;
 }
