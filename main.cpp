@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <vector>
 #include <algorithm>
 #include "errors.h"
 #include "main.h"
@@ -18,7 +19,6 @@ int main(int argc, char** argv){
     string ext = get_extension(config_filename);
     string token;
     int j = 0;
-    int numbers[26];
 
     ifstream in_stream(config_filename.c_str());
     if (!can_open_file(in_stream)){
@@ -27,8 +27,18 @@ int main(int argc, char** argv){
     }
 
     while(getline(in_stream, token, ' ')) {
+      string config_filename = argv[i];
+      string ext = get_extension(config_filename);
+      string token;
+      int j = 0;
+      vector<int> numbers;
+
       // remove whitespace
       remove_whitespace(token);
+      if (token == "") {
+        continue;
+      }
+
       // perform checks
       if (!is_num(token) && ext == "pb") {
         cerr << "Non-numeric character in plugboard file " << config_filename << endl;
@@ -39,23 +49,27 @@ int main(int argc, char** argv){
       } else if (!is_num(token) && ext == "rf") {
         cerr << "Non-numeric character in reflector file " << config_filename << endl;
         return NON_NUMERIC_CHARACTER;
-      } else if (!valid_index(token)){
+      }
+
+      cout << "Converting " << token << " to int" << endl;
+      int index = stoi(token);
+      if (!valid_index(index)){
         cerr << "Configuration file contains an invalid index" << endl;
         return INVALID_INDEX;
-      } else if (ext == "pb" && !contains(stoi(token), numbers, j)) {
+      } else if (ext == "pb" && !contains(index, numbers)) {
         cerr << "Incorrect number of parameters in plugboard file " << config_filename << endl;
         return IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
-      } else if (ext == "rot" && !contains(stoi(token), numbers, j)){
+      } else if (ext == "rot" && !contains(index, numbers)){
         cerr << "Not all inputs mapped in rotor file: " << config_filename << endl;
         return INVALID_ROTOR_MAPPING;
-      } else if (ext == "rot" && !valid_rotor_start_position(token)){
+      } else if (ext == "rot" && !valid_rotor_start_position(index)){
         cerr << "No rotor starting position" << endl;
         return NO_ROTOR_STARTING_POSITION;
-      } else if (ext == "rf" && !contains(stoi(token), numbers, j)){
+      } else if (ext == "rf" && !contains(index, numbers)){
         cerr << "Insufficient number of mappings in reflector file: " << config_filename << endl;
         return INVALID_REFLECTOR_MAPPING;
       }
-      numbers[j] = stoi(token);
+      numbers.push_back(index);
       j++;
     }
     in_stream.close();
@@ -65,10 +79,10 @@ int main(int argc, char** argv){
     } else if (ext == "rot" && !valid_rotor_mapping(j)){
       cerr << "Not all inputs mapped in rotor file: " << config_filename << endl;
       return INVALID_ROTOR_MAPPING;
-    } else if (ext == "rf" && !valid_reflector_parameters(j) && j % 2 != 0){
+    } else if (ext == "rf" && !valid_reflector_parameters(j) && (j % 2 != 0)){
       cerr << "Incorrect (odd) number of parameters in reflector file " << config_filename << endl;
       return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
-    } else if (ext == "rf" && !valid_reflector_parameters(j)){
+    } else if (ext == "rf" && !valid_reflector_parameters(j) && (j % 2 == 0)){
       cerr << "Insufficient number of mappings in reflector file: " << config_filename << endl;
       return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
     }
@@ -99,8 +113,8 @@ bool is_num(string token){
   return true;
 }
 
-bool valid_index(string token){
-  return (stoi(token) >= 0) && (stoi(token) <= 25);
+bool valid_index(int index){
+  return (index >= 0) && (index <= 25);
 }
 
 string get_extension(string config_filename){
@@ -115,9 +129,9 @@ string get_extension(string config_filename){
 }
 
 // size of numbers array needs to be explicit to get start and end of array
-bool contains(int elem, int (&array)[26], int array_size){
-  for (int i = 0; i < array_size; i++) {
-    if (array[i] == elem) {
+bool contains(int elem, vector<int> numbers){
+  for (int i = 0; i < numbers.size(); i++) {
+    if (numbers[i] == elem) {
       return false;
     }
   }
@@ -132,7 +146,7 @@ bool valid_rotor_mapping(int size_of_config_array){
   return size_of_config_array == 26;
 }
 
-bool valid_rotor_start_position(string token){
+bool valid_rotor_start_position(int index){
   return true;
 }
 
