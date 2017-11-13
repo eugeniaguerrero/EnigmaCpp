@@ -52,7 +52,7 @@ int main(int argc, char** argv){
         cerr << "Incorrect number of parameters in plugboard file " << config_filename << endl;
         return INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS;
       } if (ext == "rf" && numbers.size() >= 26) {
-        cerr << "Insufficient number of mappings in reflector file: " << config_filename << endl;
+        cerr << "Incorrect (odd) number of parameters in reflector file " << config_filename << endl;
         return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
       } else if (!valid_index(index)){
         cerr << "Configuration file contains an invalid index" << endl;
