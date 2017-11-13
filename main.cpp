@@ -43,6 +43,9 @@ int main(int argc, char** argv){
       } else if (!is_num(token) && ext == "rf") {
         cerr << "Non-numeric character in reflector file " << config_filename << endl;
         return NON_NUMERIC_CHARACTER;
+      } else if (!is_num(token) && ext == "pos") {
+        cerr << "Non-numeric character in rotor positions file " << config_filename << endl;
+        return NON_NUMERIC_CHARACTER;
       }
 
       // perform checks
