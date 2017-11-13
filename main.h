@@ -1,3 +1,6 @@
+#ifndef MAIN_H
+#define MAIN_H
+
 using namespace std;
 
 int* get_configuration(string config_filename);
@@ -17,3 +20,5 @@ bool valid_rotor_start_position(int index);
 bool valid_reflector_parameters(int);
 bool contains_duplicates(vector<int> numbers);
 void print_vector(vector<int> numbers);
+
+#endif
