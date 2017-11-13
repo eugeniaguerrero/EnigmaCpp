@@ -18,7 +18,6 @@ int main(int argc, char** argv){
     string config_filename = argv[i];
     string ext = get_extension(config_filename);
     string token;
-    int j = 0;
 
     ifstream in_stream(config_filename.c_str());
     if (!can_open_file(in_stream)){
@@ -26,13 +25,8 @@ int main(int argc, char** argv){
       return ERROR_OPENING_CONFIGURATION_FILE;
     }
 
+    vector<int> numbers = {};
     while(getline(in_stream, token, ' ')) {
-      string config_filename = argv[i];
-      string ext = get_extension(config_filename);
-      string token;
-      int j = 0;
-      vector<int> numbers;
-
       // remove whitespace
       remove_whitespace(token);
       if (token == "") {
@@ -51,8 +45,11 @@ int main(int argc, char** argv){
         return NON_NUMERIC_CHARACTER;
       }
 
-      cout << "Converting " << token << " to int" << endl;
       int index = stoi(token);
+      // if (ext = "pb" && j > 25) {
+      //   cerr << "Incorrect number of parameters in plugboard file " << config_filename << endl;
+      //   return IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
+      // }
       if (!valid_index(index)){
         cerr << "Configuration file contains an invalid index" << endl;
         return INVALID_INDEX;
@@ -70,19 +67,19 @@ int main(int argc, char** argv){
         return INVALID_REFLECTOR_MAPPING;
       }
       numbers.push_back(index);
-      j++;
     }
+
     in_stream.close();
-    if (ext == "pb" && !valid_plugboard_parameters(j)) {
+    if (ext == "pb" && !valid_plugboard_parameters(numbers.size())) {
       cerr << "Incorrect number of parameters in plugboard file " << config_filename << endl;
       return INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS;
-    } else if (ext == "rot" && !valid_rotor_mapping(j)){
+    } else if (ext == "rot" && !valid_rotor_mapping(numbers.size())){
       cerr << "Not all inputs mapped in rotor file: " << config_filename << endl;
       return INVALID_ROTOR_MAPPING;
-    } else if (ext == "rf" && !valid_reflector_parameters(j) && (j % 2 != 0)){
+    } else if (ext == "rf" && (numbers.size() % 2 != 0)){
       cerr << "Incorrect (odd) number of parameters in reflector file " << config_filename << endl;
       return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
-    } else if (ext == "rf" && !valid_reflector_parameters(j) && (j % 2 == 0)){
+    } else if (ext == "rf" && !valid_reflector_parameters(numbers.size())){
       cerr << "Insufficient number of mappings in reflector file: " << config_filename << endl;
       return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
     }
