@@ -33,7 +33,7 @@ int main(int argc, char** argv){
         continue;
       }
 
-      // perform checks
+      // see if token is a number
       if (!is_num(token) && ext == "pb") {
         cerr << "Non-numeric character in plugboard file " << config_filename << endl;
         return NON_NUMERIC_CHARACTER;
@@ -45,12 +45,15 @@ int main(int argc, char** argv){
         return NON_NUMERIC_CHARACTER;
       }
 
+      // perform checks
       int index = stoi(token);
-      // if (ext = "pb" && j > 25) {
-      //   cerr << "Incorrect number of parameters in plugboard file " << config_filename << endl;
-      //   return IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
-      // }
-      if (!valid_index(index)){
+      if (ext = "pb" && numbers.size() > 26) {
+        cerr << "Incorrect number of parameters in plugboard file " << config_filename << endl;
+        return INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS;
+      } if (ext = "rf" && numbers.size() > 26) {
+        cerr << "Insufficient number of mappings in reflector file: " << config_filename << endl;
+        return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
+      } else if (!valid_index(index)){
         cerr << "Configuration file contains an invalid index" << endl;
         return INVALID_INDEX;
       } else if (ext == "pb" && !contains(index, numbers)) {
