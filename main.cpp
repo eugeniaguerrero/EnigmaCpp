@@ -47,12 +47,11 @@ int main(int argc, char** argv){
 
       // perform checks
       int index = stoi(token);
-      numbers.push_back(index);
 
-      if (ext == "pb" && numbers.size() > 26) {
+      if (ext == "pb" && numbers.size() >= 26) {
         cerr << "Incorrect number of parameters in plugboard file " << config_filename << endl;
         return INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS;
-      } if (ext == "rf" && numbers.size() > 26) {
+      } if (ext == "rf" && numbers.size() >= 26) {
         cerr << "Insufficient number of mappings in reflector file: " << config_filename << endl;
         return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
       } else if (!valid_index(index)){
@@ -71,6 +70,8 @@ int main(int argc, char** argv){
         cerr << "Insufficient number of mappings in reflector file: " << config_filename << endl;
         return INVALID_REFLECTOR_MAPPING;
       }
+
+      numbers.push_back(index);
     }
 
     in_stream.close();
