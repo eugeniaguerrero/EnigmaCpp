@@ -5,7 +5,7 @@
 
 class Rotor: public Encoder {
 
-  private:
+  public:
     int encode(int input);
     int decode(int input);
 
