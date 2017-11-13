@@ -1,1 +1,0 @@
-rotor.o: rotor.cpp
