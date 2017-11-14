@@ -8,10 +8,18 @@
 #include "plugboard.h"
 #include "rotor.h"
 #include "reflector.h"
+#include "enigmaMachine.h"
 
 using namespace std;
 
 int main(int argc, char** argv){
+
+  Plugboard plugboard = Plugboard();
+  Rotor rotor = Rotor();
+  vector<Rotor> rotors;
+  rotors.push_back(rotor);
+  Reflector reflector = Reflector();
+  EnigmaMachine enigmaMachine = EnigmaMachine(plugboard, rotors, reflector);
 
   if (!(argc >= 3)) {
     cerr << "usage: enigma plugboard-file reflector-file (<rotor-file>* rotor-positions)?" << endl;
