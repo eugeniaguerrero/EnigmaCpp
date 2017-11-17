@@ -6,11 +6,9 @@ using namespace std;
 
 class Encoder {
 
-  private:
-    vector<int> mappings;
-
   // can never be accessed outside of its child classes
   protected:
+    vector<int> mappings;
     Encoder() {};
 
   public:

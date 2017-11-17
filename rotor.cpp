@@ -7,3 +7,11 @@ Rotor::Rotor(int _position, vector<int> _notches, vector<int> _mappings) {
   notches = _notches;
   mappings = _mappings;
 }
+
+int Rotor::get_position(){
+  return position;
+}
+
+bool Rotor::turn(){
+  return contains(++position % 26, notches);
+}

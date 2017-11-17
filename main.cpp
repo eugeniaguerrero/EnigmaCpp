@@ -4,13 +4,6 @@ using namespace std;
 
 int main(int argc, char** argv){
 
-  // Plugboard plugboard = Plugboard();
-  // Rotor rotor = Rotor(position, notches);
-  // vector<Rotor> rotors;
-  // rotors.push_back(rotor);
-  // Reflector reflector = Reflector();
-  // EnigmaMachine enigmaMachine = EnigmaMachine(plugboard, rotors, reflector);
-
   if (!(argc >= 3)) {
     cerr << "usage: enigma plugboard-file reflector-file (<rotor-file>* rotor-positions)?" << endl;
     return INSUFFICIENT_NUMBER_OF_PARAMETERS;
@@ -94,7 +87,17 @@ int main(int argc, char** argv){
       return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
     }
 
+    // define each component
+    // e.g. plugboard = ...
+
   }
+
+  // define EnigmaMachine here, since its components are available
+
+  // cin << user input and call enigmaMachine.encode(char) for each character
+  // But maybe first copy a string from LabTS and feed in manually here (instead
+  // of entering it in the terminal each time)
+
   return NO_ERROR;
 }
 

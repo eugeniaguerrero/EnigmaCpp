@@ -9,6 +9,7 @@
 using namespace std;
 
 class Plugboard: public Encoder {
+  
   private:
     vector<int> mappings;
 
