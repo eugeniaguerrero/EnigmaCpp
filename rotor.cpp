@@ -1,10 +1,9 @@
 #include "rotor.h"
 
-// access encode inside the plugboard class
-int Rotor::encode(int input) {
-  return input;
-}
-
-int Rotor::decode(int input) {
-  return input;
+// define the constructor Rotor in the Rotor class
+Rotor::Rotor(int _position, vector<int> _notches, vector<int> _mappings) {
+  // intialise the attributes
+  position = _position;
+  notches = _notches;
+  mappings = _mappings;
 }

@@ -1,10 +1,7 @@
 #include "plugboard.h"
 
-// access encode inside the plugboard class
-int Plugboard::encode(int input) {
-  return input;
-}
+using namespace std;
 
-int Plugboard::decode(int input) {
-  return input;
+Plugboard::Plugboard(vector<int> _mappings){
+  mappings = _mappings;
 }

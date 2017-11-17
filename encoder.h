@@ -1,10 +1,20 @@
 #ifndef ENCODER_H
 #define ENCODER_H
 
+#include <vector>
+using namespace std;
+
 class Encoder {
 
-  virtual int encode(int input) = 0;
-  virtual int decode(int input) = 0;
+  private:
+    vector<int> mappings;
+
+  // can never be accessed outside of its child classes
+  protected:
+    Encoder() {};
+
+  public:
+    virtual int encode(int input);
 
 };
 

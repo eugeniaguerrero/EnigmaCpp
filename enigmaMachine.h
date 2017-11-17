@@ -2,22 +2,23 @@
 #define ENIGMA_MACHINE_H
 
 #include <vector>
-
+#include "encoder.h"
 #include "plugboard.h"
 #include "rotor.h"
 #include "reflector.h"
 
-class EnigmaMachine {
+using namespace std;
+
+class EnigmaMachine: public Encoder {
 
   private:
     Plugboard plugboard;
-    std::vector<Rotor> rotors;
+    vector<Rotor> rotors;
     Reflector reflector;
 
   public:
-    EnigmaMachine(Plugboard, std::vector<Rotor>, Reflector);
-    int encode(int);
-    int decode(int);
+    EnigmaMachine(Plugboard, vector<Rotor>, Reflector);
+    virtual int encode(int) override;
 
 };
 

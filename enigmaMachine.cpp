@@ -11,7 +11,3 @@ EnigmaMachine::EnigmaMachine(Plugboard _plugboard, vector<Rotor> _rotors, Reflec
 int EnigmaMachine::encode(int input) {
   return input;
 }
-
-int EnigmaMachine::decode(int input) {
-  return input;
-}

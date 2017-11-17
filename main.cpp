@@ -1,25 +1,15 @@
-#include <iostream>
-#include <string>
-#include <fstream>
-#include <vector>
-#include <algorithm>
-#include "errors.h"
 #include "main.h"
-#include "plugboard.h"
-#include "rotor.h"
-#include "reflector.h"
-#include "enigmaMachine.h"
 
 using namespace std;
 
 int main(int argc, char** argv){
 
-  Plugboard plugboard = Plugboard();
-  Rotor rotor = Rotor();
-  vector<Rotor> rotors;
-  rotors.push_back(rotor);
-  Reflector reflector = Reflector();
-  EnigmaMachine enigmaMachine = EnigmaMachine(plugboard, rotors, reflector);
+  // Plugboard plugboard = Plugboard();
+  // Rotor rotor = Rotor(position, notches);
+  // vector<Rotor> rotors;
+  // rotors.push_back(rotor);
+  // Reflector reflector = Reflector();
+  // EnigmaMachine enigmaMachine = EnigmaMachine(plugboard, rotors, reflector);
 
   if (!(argc >= 3)) {
     cerr << "usage: enigma plugboard-file reflector-file (<rotor-file>* rotor-positions)?" << endl;
@@ -37,7 +27,7 @@ int main(int argc, char** argv){
       return ERROR_OPENING_CONFIGURATION_FILE;
     }
 
-    vector<int> numbers = {};
+    vector<int> mappings = {};
     while(getline(in_stream, token, ' ')) {
       // remove whitespace
       remove_whitespace(token);
@@ -63,43 +53,43 @@ int main(int argc, char** argv){
       // perform checks
       int index = stoi(token);
 
-      if (ext == "pb" && numbers.size() >= 26) {
+      if (ext == "pb" && mappings.size() >= 26) {
         cerr << "Incorrect number of parameters in plugboard file " << config_filename << endl;
         return INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS;
-      } if (ext == "rf" && numbers.size() >= 26) {
+      } if (ext == "rf" && mappings.size() >= 26) {
         cerr << "Incorrect (odd) number of parameters in reflector file " << config_filename << endl;
         return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
       } else if (!valid_index(index)){
         cerr << "Configuration file contains an invalid index" << endl;
         return INVALID_INDEX;
-      } else if (ext == "pb" && contains(index, numbers)) {
+      } else if (ext == "pb" && contains(index, mappings)) {
         cerr << "Incorrect number of parameters in plugboard file " << config_filename << endl;
         return IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
-      } else if (ext == "rot" && contains(index, numbers) && numbers.size() <= 26){
+      } else if (ext == "rot" && contains(index, mappings) && mappings.size() <= 26){
         cerr << "Not all inputs mapped in rotor file: " << config_filename << endl;
         return INVALID_ROTOR_MAPPING;
       } else if (ext == "rot" && !valid_rotor_start_position(index)){
         cerr << "No rotor starting position" << endl;
         return NO_ROTOR_STARTING_POSITION;
-      } else if (ext == "rf" && contains(index, numbers)){
+      } else if (ext == "rf" && contains(index, mappings)){
         cerr << "Insufficient number of mappings in reflector file: " << config_filename << endl;
         return INVALID_REFLECTOR_MAPPING;
       }
 
-      numbers.push_back(index);
+      mappings.push_back(index);
     }
 
     in_stream.close();
-    if (ext == "pb" && !valid_plugboard_parameters(numbers.size())) {
+    if (ext == "pb" && !valid_plugboard_parameters(mappings.size())) {
       cerr << "Incorrect number of parameters in plugboard file " << config_filename << endl;
       return INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS;
-    } else if (ext == "rot" && !valid_rotor_mapping(numbers)){
+    } else if (ext == "rot" && !valid_rotor_mapping(mappings)){
       cerr << "Not all inputs mapped in rotor file: " << config_filename << endl;
       return INVALID_ROTOR_MAPPING;
-    } else if (ext == "rf" && (numbers.size() % 2 != 0)){
+    } else if (ext == "rf" && (mappings.size() % 2 != 0)){
       cerr << "Incorrect (odd) number of parameters in reflector file " << config_filename << endl;
       return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
-    } else if (ext == "rf" && !valid_reflector_parameters(numbers.size())){
+    } else if (ext == "rf" && !valid_reflector_parameters(mappings.size())){
       cerr << "Insufficient number of mappings in reflector file: " << config_filename << endl;
       return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
     }
@@ -145,29 +135,20 @@ string get_extension(string config_filename){
   return config_filename.substr(ext_index + 1, config_filename.length());
 }
 
-// size of numbers array needs to be explicit to get start and end of array
-bool contains(int elem, vector<int> numbers){
-  for (int i = 0; i < numbers.size(); i++) {
-    if (numbers[i] == elem) {
-      return true;
-    }
-  }
-  return false;
-}
 
 bool valid_plugboard_parameters(int size_of_config_array){
   return size_of_config_array % 2 == 0;
 }
 
-bool valid_rotor_mapping(vector<int> numbers){
-  if (numbers.size() < 26) {
+bool valid_rotor_mapping(vector<int> mappings){
+  if (mappings.size() < 26) {
     return false;
-  } else if (numbers.size() > 52) {
+  } else if (mappings.size() > 52) {
     return false;
   } else {
-    vector<int> mappings(numbers.begin(), numbers.begin() + 26);
-    vector<int> notches(numbers.begin() + 26, numbers.end());
-    return !contains_duplicates(mappings) && !contains_duplicates(notches);
+    vector<int> numbers(mappings.begin(), mappings.begin() + 26);
+    vector<int> notches(mappings.begin() + 26, mappings.end());
+    return !contains_duplicates(numbers) && !contains_duplicates(notches);
   }
 }
 
@@ -180,22 +161,22 @@ bool valid_reflector_parameters(int size_of_config_array){
   return size_of_config_array == 26;
 }
 
-bool contains_duplicates(vector<int> numbers) {
+bool contains_duplicates(vector<int> mappings) {
   vector<int> seen;
-  for (int i = 0; i < numbers.size(); i++) {
-    if (contains(numbers[i], seen)) {
+  for (int i = 0; i < mappings.size(); i++) {
+    if (contains(mappings[i], seen)) {
       return false;
     } else {
-      seen.push_back(numbers[i]);
+      seen.push_back(mappings[i]);
     }
   }
   return true;
 }
 
-void print_vector(vector<int> numbers) {
+void print_vector(vector<int> mappings) {
   cout << "[ ";
-  for (int i = 0; i < numbers.size(); i++) {
-    cout << numbers[i] << " ";
+  for (int i = 0; i < mappings.size(); i++) {
+    cout << mappings[i] << " ";
   }
   cout << "]" << endl;
 }
