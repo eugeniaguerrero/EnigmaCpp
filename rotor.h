@@ -16,11 +16,9 @@ class Rotor: public Encoder {
 
   public:
     Rotor(int _position, vector<int> _notches, vector<int> _mappings);
-    int get_position();
     vector<int> get_notches(int notches);
-    // increments the position and checks whether it is
-    // contained in the mappings of the rotor
-    bool turn();
+    int get_position();
+    bool turn();  // increments the position and checks whether it is contained in the mappings of the rotor
 
 };
 

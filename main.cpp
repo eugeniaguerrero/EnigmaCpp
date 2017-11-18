@@ -9,17 +9,41 @@ int main(int argc, char** argv){
     return INSUFFICIENT_NUMBER_OF_PARAMETERS;
   }
 
+  // check config files appear in correct place in command line
   for (int i = 1; i < argc; i++){
+    // get file extension
+    string config_filename = argv[i];
+    string ext = get_extension(config_filename);
+    // check if in correct place
+    if (i == 1 && ext != "pb") {
+      cerr << "Configuration file cannot be opened" << endl;
+      return ERROR_OPENING_CONFIGURATION_FILE;
+    } else if (i == 2 && ext != "rf") {
+      cerr << "Configuration file cannot be opened" << endl;
+      return ERROR_OPENING_CONFIGURATION_FILE;
+    } else if (i > 2 && i == argc-1 && ext != "pos") {
+      cerr << "Configuration file cannot be opened" << endl;
+      return ERROR_OPENING_CONFIGURATION_FILE;
+    } else if (i > 2 && i < argc-1 && ext != "rot") {
+      cerr << "Configuration file cannot be opened" << endl;
+      return ERROR_OPENING_CONFIGURATION_FILE;
+    }
+  }
+
+  // loop over command line arguments
+  for (int i = 1; i < argc; i++){
+    // initialise convenient variables
     string config_filename = argv[i];
     string ext = get_extension(config_filename);
     string token;
 
+    // open config file
     ifstream in_stream(config_filename.c_str());
-    if (!can_open_file(in_stream)){
+    if (in_stream.fail()){
       cerr << "Configuration file cannot be opened" << endl;
       return ERROR_OPENING_CONFIGURATION_FILE;
     }
-
+    // read from file token by token
     vector<int> mappings = {};
     while(getline(in_stream, token, ' ')) {
       // remove whitespace
@@ -28,24 +52,24 @@ int main(int argc, char** argv){
         continue;
       }
 
-      // see if token is a number
-      if (!is_num(token) && ext == "pb") {
-        cerr << "Non-numeric character in plugboard file " << config_filename << endl;
-        return NON_NUMERIC_CHARACTER;
-      } else if (!is_num(token) && ext == "rot") {
-        cerr << "Non-numeric character for mapping in rotor file " << config_filename << endl;
-        return NON_NUMERIC_CHARACTER;
-      } else if (!is_num(token) && ext == "rf") {
-        cerr << "Non-numeric character in reflector file " << config_filename << endl;
-        return NON_NUMERIC_CHARACTER;
-      } else if (!is_num(token) && ext == "pos") {
-        cerr << "Non-numeric character in rotor positions file " << config_filename << endl;
+      // check if token is not a number
+      if (!is_num(token)) {
+        if (ext == "pb") {
+          cerr << "Non-numeric character in plugboard file " << config_filename << endl;
+        } else if (ext == "rot") {
+          cerr << "Non-numeric character for mapping in rotor file " << config_filename << endl;
+        } else if (ext == "rf") {
+          cerr << "Non-numeric character in reflector file " << config_filename << endl;
+        } else if (ext == "pos") {
+          cerr << "Non-numeric character in rotor positions file " << config_filename << endl;
+        }
         return NON_NUMERIC_CHARACTER;
       }
 
-      // perform checks
+      // convert token to number
       int index = stoi(token);
 
+      // perform checks
       if (ext == "pb" && mappings.size() >= 26) {
         cerr << "Incorrect number of parameters in plugboard file " << config_filename << endl;
         return INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS;
@@ -68,7 +92,7 @@ int main(int argc, char** argv){
         cerr << "Insufficient number of mappings in reflector file: " << config_filename << endl;
         return INVALID_REFLECTOR_MAPPING;
       }
-
+      // add index to mappings
       mappings.push_back(index);
     }
 
@@ -88,30 +112,42 @@ int main(int argc, char** argv){
     }
 
     // define each component
-    // e.g. plugboard = ...
+    if (ext == "pb"){
+      Plugboard plugboard = Plugboard(mappings);
+    }
 
+    if (ext == "pos"){
+      vector<int> positions = mappings;
+    }
+
+
+    // instantiate number of rotors (deducting enigma, reflector, plugboard, position files)
+
+      // Rotor rotor = Rotor(position, notches, mappings);
+
+    if (ext == "rf"){
+      Reflector reflector = Reflector(mappings);
+    }
   }
 
-  // define EnigmaMachine here, since its components are available
+  // define EnigmaMachine here (since its components are available)
+  EnigmaMachine enigmaMachine(argc, argv);
 
-  // cin << user input and call enigmaMachine.encode(char) for each character
-  // But maybe first copy a string from LabTS and feed in manually here (instead
-  // of entering it in the terminal each time)
+  // read in characters from standard input
+  char current_char;
+  cin >> ws;
+  while (!cin.eof())
+  {
+    cin >> current_char;
+    cout << (char) enigmaMachine.encode(current_char);
+    cin >> ws;
+  }
 
   return NO_ERROR;
 }
 
 void remove_whitespace(string &token) {
   token.erase(remove_if(token.begin(), token.end(), ::isspace), token.end());
-}
-
-bool can_open_file(ifstream &in_stream){
-  if (in_stream.fail())
-  {
-    cerr << "Configuration file cannot be opened." << endl;
-    return false;
-  }
-  return true;
 }
 
 bool is_num(string token){
@@ -129,7 +165,7 @@ bool valid_index(int index){
 
 string get_extension(string config_filename){
   // find last dot in given string
-  int ext_index = config_filename.rfind(".");
+  size_t ext_index = config_filename.rfind(".");
   // no extension found, return empty string
   if (ext_index == string::npos) {
     return "";
@@ -166,7 +202,7 @@ bool valid_reflector_parameters(int size_of_config_array){
 
 bool contains_duplicates(vector<int> mappings) {
   vector<int> seen;
-  for (int i = 0; i < mappings.size(); i++) {
+  for (size_t i = 0; i < mappings.size(); i++) {
     if (contains(mappings[i], seen)) {
       return false;
     } else {
@@ -178,7 +214,7 @@ bool contains_duplicates(vector<int> mappings) {
 
 void print_vector(vector<int> mappings) {
   cout << "[ ";
-  for (int i = 0; i < mappings.size(); i++) {
+  for (size_t i = 0; i < mappings.size(); i++) {
     cout << mappings[i] << " ";
   }
   cout << "]" << endl;

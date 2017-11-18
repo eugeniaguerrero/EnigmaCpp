@@ -6,8 +6,7 @@ using namespace std;
 
 class Encoder {
 
-  // can never be accessed outside of its child classes
-  protected:
+  protected: // can never be accessed outside of its child classes
     vector<int> mappings;
     Encoder() {};
 

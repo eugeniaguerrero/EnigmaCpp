@@ -22,7 +22,7 @@ int EnigmaMachine::encode(int input) {
   input = reflector.encode(input);
 
   // pass through rotors left to right
-  for (int i = 0; i < rotors.size(); i++){
+  for (size_t i = 0; i < rotors.size(); i++){
     Rotor rotor = rotors[i];
     input = rotor.encode(input - rotor.get_position()) + rotor.get_position();
   }
@@ -33,6 +33,7 @@ int EnigmaMachine::encode(int input) {
   // turn relevant rotors
   turn_rotors();
 
+  // return encoded input
   return input;
 }
 
@@ -40,8 +41,8 @@ void EnigmaMachine::turn_rotors() {
   turn_rotors_helper(0);
 }
 
-void EnigmaMachine::turn_rotors_helper(int i) {
+void EnigmaMachine::turn_rotors_helper(size_t i) {
   if ((i <= rotors.size() - 1) && rotors[rotors.size() - 1 - i].turn()) {
-    turn_rotors_helper(i - 1);
+    turn_rotors_helper(i + 1);
   }
 }

@@ -16,7 +16,6 @@
 using namespace std;
 
 int* get_configuration(string config_filename);
-bool can_open_file(ifstream &in_stream);
 bool is_num(string token);
 bool valid_index(int index);
 // specific checks for configuration files
