@@ -26,10 +26,7 @@ int EnigmaMachine::encode(int input) {
   // pass through rotors left to right
   for (size_t i = 0; i < rotors.size(); i++) {
     Rotor rotor = rotors[i];
-    // cout << "After " << i << " rotor: " << input << endl;
-    // cout << "Notch(es) for " << i << " rotor: ";
-    // print_vector(rotor.get_notches());
-    input = mod(rotor.encode(mod(input - rotor.get_position(), 26)) + rotor.get_position(), 26);
+    input = mod(rotor.encode(mod(input + rotor.get_position(), 26)) - rotor.get_position(), 26);
   }
 
   // pass through plugboard
