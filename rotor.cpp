@@ -10,6 +10,11 @@ int Rotor::get_position(){
   return position;
 }
 
+vector<int> Rotor::get_mappings(){
+  return Encoder::mappings;
+}
+
 bool Rotor::turn(){
-  return contains(++position % 26, notches);
+  position = (position + 1) % 26;
+  return contains(position, notches);
 }

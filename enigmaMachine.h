@@ -18,7 +18,8 @@ class EnigmaMachine: public Encoder {
     vector<Rotor> rotors;
     Reflector reflector;
     void turn_rotors();
-    void turn_rotors_helper(size_t i);
+    void turn_rotors_helper(int i);
+    int mod(int k, int n);
 
   public:
     EnigmaMachine(Plugboard &pb, vector<Rotor> &rots, Reflector &rf): plugboard(pb), rotors(rots), reflector(rf) {}

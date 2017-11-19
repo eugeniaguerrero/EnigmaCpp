@@ -113,7 +113,7 @@ int main(int argc, char** argv){
         // still reading in mappings, otherwise, reading in notches
         if (mappings.size() < 26) {
           if (contains(index, mappings)) {
-            cerr << "Not all inputs mapped in rotor file: " << config_filename << endl;
+            print_rotor_duplication_message(index, mappings);
             return INVALID_ROTOR_MAPPING;
           }
         } else {
@@ -263,4 +263,18 @@ bool contains_duplicates(vector<int> mappings) {
     }
   }
   return false;
+}
+
+void print_rotor_duplication_message(int index, vector<int> mappings){
+  for (size_t i = 0; i < mappings.size(); i++){
+    if (contains(index, mappings)){
+      // int attempting_to_map_to;
+      // int previously_mapped_to;
+      // break;
+      // cerr << "Invalid mapping of input " << attempting_to_map_to;
+      // cerr << " to output " << token;
+      // cerr << "(output " << token << "is already mapped to from input";
+      // cerr << previously_mapped_to << ")" << endl;
+    }
+  }
 }

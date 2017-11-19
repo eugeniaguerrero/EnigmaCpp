@@ -20,5 +20,6 @@ void remove_whitespace(string &token);
 bool is_num(string token);
 bool valid_rotor_mapping(vector<int>);
 bool contains_duplicates(vector<int> mappings);
+void print_rotor_duplication_message(int input, vector<int> mappings);
 
 #endif

@@ -14,6 +14,7 @@ class Reflector: public Encoder {
   public:
     Reflector() {};
     Reflector(vector<int> _mappings);
+    vector<int> get_mappings();
 
 };
 
