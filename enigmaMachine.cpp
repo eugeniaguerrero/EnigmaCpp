@@ -32,7 +32,7 @@ int EnigmaMachine::encode(int input) {
     // cout << "Before rotor " << i << ": " << input << endl;
     // cout << "Rotor " << i << " has position " << rotor.get_position() << " and mappings ";
     // print_vector(rotor.get_mappings());
-    input = mod(rotor.decode(mod(input - rotor.get_position(), 26)) + rotor.get_position(), 26);
+    input = mod(rotor.decode(mod(input + rotor.get_position(), 26)) - rotor.get_position(), 26);
     // cout << "After rotor " << i << ": " << input << endl;
   }
 
@@ -40,7 +40,7 @@ int EnigmaMachine::encode(int input) {
   // cout << "Given: " << input << endl;
   input = plugboard.encode(input);
   // cout << "After plugboard: " << input << endl;
-  
+
   // turn relevant rotors
   // cout << "Given: " << input << endl;
   turn_rotors();
