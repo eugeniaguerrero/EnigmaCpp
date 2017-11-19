@@ -211,7 +211,7 @@ int main(int argc, char** argv){
     if (current_char >= 'A' && current_char <= 'Z') {
       cout << (char) (enigmaMachine.encode(current_char - 'A') + 'A');
     } else {
-      cerr << "Characters must be from 'A' to 'Z'." << endl;
+      cerr << current_char << " is not a valid input character (input characters must be uppercase letters A-Z)!" << endl;
       return INVALID_INPUT_CHARACTER;
     }
     cin >> ws;
