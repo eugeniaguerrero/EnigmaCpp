@@ -6,12 +6,16 @@ Rotor::Rotor(int _position, vector<int> _notches, vector<int> _mappings) {
   Encoder::mappings = _mappings;
 }
 
-int Rotor::get_position(){
-  return position;
+int Rotor::encode(int index) {
+  return mappings[index];
 }
 
-vector<int> Rotor::get_notches(){
-  return notches;
+int Rotor::decode(int output) {
+  return find_index(output, Encoder::mappings);
+}
+
+int Rotor::get_position(){
+  return position;
 }
 
 vector<int> Rotor::get_mappings(){
@@ -19,6 +23,5 @@ vector<int> Rotor::get_mappings(){
 }
 
 bool Rotor::turn(){
-  position = (position + 1) % 26;
-  return contains(position, notches);
+  return contains(mod(++position, 26), notches);
 }

@@ -17,3 +17,17 @@ void print_vector(vector<int> mappings) {
   }
   cout << "]" << endl;
 }
+
+// mathematical version of modulus function
+int mod(int k, int n) {
+    return ((k %= n) < 0) ? k + n : k;
+}
+
+int find_index(int value, vector<int> values) {
+  for (size_t i = 0; i < values.size(); i++) {
+    if (value == values[i]) {
+      return i;
+    }
+  }
+  return -1;
+}

@@ -163,7 +163,7 @@ int main(int argc, char** argv){
 
     // perform position checks
     if (ext == "pos" && mappings.size() != rotor_mappings.size()) {
-      cerr << "No rotor starting position" << endl;
+      cerr << "No starting position for rotor in rotor position file: " << config_filename << endl;
       return NO_ROTOR_STARTING_POSITION;
     }
 
