@@ -56,7 +56,7 @@ int main(int argc, char** argv){
     // read from file token by token and store in mappings
     vector<int> mappings = {};
     while(getline(in_stream, token, ' ')) {
-  
+
       // remove whitespace
       remove_whitespace(token);
       if (token == "") {
@@ -136,7 +136,7 @@ int main(int argc, char** argv){
       // add index to mappings
       mappings.push_back(index);
     }
-    
+
     // close file -- finished reading
     in_stream.close();
 
@@ -144,7 +144,7 @@ int main(int argc, char** argv){
     if (ext == "pb" && mappings.size() % 2 != 0){
       cerr << "Incorrect number of parameters in plugboard file " << config_filename << endl;
       return INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS;
-    } 
+    }
 
     // perform reflector checks
     if (ext == "rf" && mappings.size() != 26){
@@ -207,7 +207,7 @@ int main(int argc, char** argv){
     cin >> current_char;
     if (current_char >= 'A' && current_char <= 'Z') {
       cout << (char) (enigmaMachine.encode(current_char - 'A') + 'A');
-    } 
+    }
     cin >> ws;
   }
 
