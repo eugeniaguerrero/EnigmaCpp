@@ -4,10 +4,7 @@ using namespace std;
 
 int main(int argc, char** argv){
 
-<<<<<<< HEAD
   // check if too few parameters were provided, or if a rotor without a position file (or vice versa)
-=======
->>>>>>> e90afce75bd2fcc63684540a538d891daa13526f
   if (argc < 3 || argc == 4) {
     cerr << "usage: enigma plugboard-file reflector-file (<rotor-file>* rotor-positions)?" << endl;
     return INSUFFICIENT_NUMBER_OF_PARAMETERS;
@@ -59,11 +56,7 @@ int main(int argc, char** argv){
     // read from file token by token and store in mappings
     vector<int> mappings = {};
     while(getline(in_stream, token, ' ')) {
-<<<<<<< HEAD
   
-=======
-
->>>>>>> e90afce75bd2fcc63684540a538d891daa13526f
       // remove whitespace
       remove_whitespace(token);
       if (token == "") {
@@ -143,11 +136,7 @@ int main(int argc, char** argv){
       // add index to mappings
       mappings.push_back(index);
     }
-<<<<<<< HEAD
     
-=======
-
->>>>>>> e90afce75bd2fcc63684540a538d891daa13526f
     // close file -- finished reading
     in_stream.close();
 
@@ -155,11 +144,7 @@ int main(int argc, char** argv){
     if (ext == "pb" && mappings.size() % 2 != 0){
       cerr << "Incorrect number of parameters in plugboard file " << config_filename << endl;
       return INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS;
-<<<<<<< HEAD
     } 
-=======
-    }
->>>>>>> e90afce75bd2fcc63684540a538d891daa13526f
 
     // perform reflector checks
     if (ext == "rf" && mappings.size() != 26){
@@ -181,7 +166,6 @@ int main(int argc, char** argv){
 
     // define each component
     if (ext == "pb") {
-<<<<<<< HEAD
       // cout << "In main: passing ";
       // print_vector(mappings);
       // cout <<  " to plugboard" << endl;
@@ -190,9 +174,6 @@ int main(int argc, char** argv){
       // print_vector(plugboard.get_mappings());
       // cout << endl;
 
-=======
-      plugboard = Plugboard(mappings);
->>>>>>> e90afce75bd2fcc63684540a538d891daa13526f
     } else if (ext == "rf") {
       reflector = Reflector(mappings);
     } else if (ext == "rot") {
@@ -280,16 +261,4 @@ bool contains_duplicates(vector<int> mappings) {
     }
   }
   return false;
-<<<<<<< HEAD
 }
-=======
-}
-
-void print_vector(vector<int> mappings) {
-  cout << "[ ";
-  for (size_t i = 0; i < mappings.size(); i++) {
-    cout << mappings[i] << " ";
-  }
-  cout << "]" << endl;
-}
->>>>>>> e90afce75bd2fcc63684540a538d891daa13526f
