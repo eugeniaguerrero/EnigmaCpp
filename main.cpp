@@ -150,6 +150,9 @@ int main(int argc, char** argv){
     if (ext == "rf" && mappings.size() != 26){
       cerr << "Insufficient number of mappings in reflector file: " << config_filename << endl;
       return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
+    } else if (ext == "rf" && mappings.size() < 26 && mappings.size() % 2 != 0){
+      cerr << "Incorrect (odd) number of parameters in reflector file: " << config_filename << endl;
+      return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
     }
 
     // perform rotor checks
@@ -210,7 +213,6 @@ int main(int argc, char** argv){
     }
     cin >> ws;
   }
-
   return NO_ERROR;
 }
 
