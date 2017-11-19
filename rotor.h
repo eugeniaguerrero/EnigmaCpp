@@ -12,6 +12,8 @@ class Rotor: public Encoder {
   private:
     int position;
     vector<int> notches;
+    
+  protected:
     vector<int> mappings;
 
   public:

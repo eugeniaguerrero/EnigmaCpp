@@ -12,6 +12,7 @@ class Encoder {
 
   public:
     virtual int encode(int input);
+    vector<int> get_mappings();
 
 };
 

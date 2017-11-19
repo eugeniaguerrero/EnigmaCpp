@@ -9,11 +9,11 @@ using namespace std;
 
 class Plugboard: public Encoder {
 
-  private:
+  protected:
     vector<int> mappings;
 
   public:
-    Plugboard() {};
+    Plugboard() { };
     Plugboard(vector<int> _mappings);
 
 };

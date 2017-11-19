@@ -1,5 +1,5 @@
 #include "reflector.h"
 
-Reflector::Reflector(vector<int> _mappings){
-  mappings = _mappings;
+Reflector::Reflector(vector<int> _mappings) {
+	Encoder::mappings = _mappings;
 }

@@ -2,10 +2,12 @@
 #define ENIGMA_MACHINE_H
 
 #include <vector>
+#include <iostream>
 #include "encoder.h"
 #include "plugboard.h"
 #include "rotor.h"
 #include "reflector.h"
+#include "utils.h"
 
 using namespace std;
 
@@ -19,7 +21,7 @@ class EnigmaMachine: public Encoder {
     void turn_rotors_helper(size_t i);
 
   public:
-    EnigmaMachine(Plugboard, vector<Rotor>, Reflector);
+    EnigmaMachine(Plugboard &pb, vector<Rotor> &rots, Reflector &rf): plugboard(pb), rotors(rots), reflector(rf) {}
     virtual int encode(int) override;
 
 };

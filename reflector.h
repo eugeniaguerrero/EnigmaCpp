@@ -8,7 +8,7 @@ using namespace std;
 
 class Reflector: public Encoder {
 
-  private:
+  protected:
     vector<int> mappings;
 
   public:
