@@ -103,7 +103,7 @@ int main(int argc, char** argv){
           cerr << "Incorrect (odd) number of parameters in reflector file " << config_filename << endl;
           return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
         } else if (contains(index, mappings)){
-          cerr << "Insufficient number of mappings in reflector file H: " << config_filename << endl;
+          cerr << "Insufficient number of mappings in reflector file: " << config_filename << endl;
           return INVALID_REFLECTOR_MAPPING;
         }
       }
@@ -147,11 +147,11 @@ int main(int argc, char** argv){
     }
 
     // perform reflector checks
-    if (ext == "rf" && mappings.size() != 26){
-      cerr << "Insufficient number of mappings in reflector file: " << config_filename << endl;
-      return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
-    } else if (ext == "rf" && mappings.size() < 26 && mappings.size() % 2 != 0){
+    if (ext == "rf" && mappings.size() < 26 && mappings.size() % 2 != 0){
       cerr << "Incorrect (odd) number of parameters in reflector file: " << config_filename << endl;
+      return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
+    } else if (ext == "rf" && mappings.size() != 26){
+      cerr << "Insufficient number of mappings in reflector file: " << config_filename << endl;
       return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
     }
 
