@@ -10,6 +10,10 @@ int Rotor::get_position(){
   return position;
 }
 
+vector<int> Rotor::get_notches(){
+  return notches;
+}
+
 vector<int> Rotor::get_mappings(){
   return Encoder::mappings;
 }

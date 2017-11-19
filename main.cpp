@@ -270,11 +270,11 @@ void print_rotor_duplication_message(int index, vector<int> mappings){
     if (contains(index, mappings)){
       // int attempting_to_map_to;
       // int previously_mapped_to;
-      // break;
+      //
+    }
       // cerr << "Invalid mapping of input " << attempting_to_map_to;
       // cerr << " to output " << token;
       // cerr << "(output " << token << "is already mapped to from input";
       // cerr << previously_mapped_to << ")" << endl;
-    }
   }
 }
