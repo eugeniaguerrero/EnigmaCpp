@@ -210,6 +210,9 @@ int main(int argc, char** argv){
     cin >> current_char;
     if (current_char >= 'A' && current_char <= 'Z') {
       cout << (char) (enigmaMachine.encode(current_char - 'A') + 'A');
+    } else {
+      cerr << "Characters must be from 'A' to 'Z'." << endl;
+      return INVALID_INPUT_CHARACTER;
     }
     cin >> ws;
   }

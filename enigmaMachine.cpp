@@ -9,7 +9,6 @@ int EnigmaMachine::encode(int input) {
   // pass through plugboard
   // cout << "Plugboard using mappings ";
   // print_vector(plugboard.get_mappings());
-  cout << endl;
   input = plugboard.encode(input);
   // cout << "After plugboard: " << input << endl;
 
