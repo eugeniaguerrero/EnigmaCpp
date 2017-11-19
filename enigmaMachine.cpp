@@ -3,6 +3,8 @@
 using namespace std;
 
 int EnigmaMachine::encode(int input) {
+  // turn relevant rotors
+  turn_rotors();
   // cout << "Given input: " << input << endl;
   // pass through plugboard
   // cout << "Plugboard using mappings ";
@@ -34,9 +36,6 @@ int EnigmaMachine::encode(int input) {
   // pass through plugboard
   input = plugboard.encode(input);
   // cout << "After plugboard: " << input << endl;
-
-  // turn relevant rotors
-  turn_rotors();
 
   // return encoded input
   // cout << "Returning input: " << input << endl;
