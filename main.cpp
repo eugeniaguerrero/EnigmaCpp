@@ -113,7 +113,7 @@ int main(int argc, char** argv){
         // still reading in mappings, otherwise, reading in notches
         if (mappings.size() < 26) {
           if (contains(index, mappings)) {
-            cerr << "Invalid mapping of input" << index << ", it is already previously mapped to another output";
+            cerr << "Invalid mapping of '" << index << "', it is already previously mapped to another output";
             return INVALID_ROTOR_MAPPING;
           }
         } else {
@@ -163,7 +163,7 @@ int main(int argc, char** argv){
 
     // perform position checks
     if (ext == "pos" && mappings.size() != rotor_mappings.size()) {
-      cerr << "No starting position for rotor in rotor position file: " << config_filename << endl;
+      cerr << "No starting position for one of the rotors in rotor position file: " << config_filename << endl;
       return NO_ROTOR_STARTING_POSITION;
     }
 
@@ -205,7 +205,7 @@ int main(int argc, char** argv){
     if (current_char >= 'A' && current_char <= 'Z') {
       cout << (char) (enigmaMachine.encode(current_char - 'A') + 'A');
     } else {
-      cerr << current_char << " is not a valid input character (input characters must be uppercase letters A-Z)!" << endl;
+      cerr << current_char << " is not a valid input character (input characters must be upper case letters A-Z)!" << endl;
       return INVALID_INPUT_CHARACTER;
     }
     cin >> ws;
