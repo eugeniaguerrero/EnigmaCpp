@@ -100,7 +100,7 @@ int main(int argc, char** argv){
       // perform reflector checks
       if (ext == "rf") {
         if (mappings.size() >= 26) {
-          cerr << "Incorrect (odd) number of parameters in reflector file " << config_filename << endl;
+          cerr << "Incorrect (odd) number of parameters in reflector file: " << config_filename << endl;
           return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
         } else if (contains(index, mappings)){
           cerr << "Insufficient number of mappings in reflector file: " << config_filename << endl;
