@@ -113,7 +113,7 @@ int main(int argc, char** argv){
         // still reading in mappings, otherwise, reading in notches
         if (mappings.size() < 26) {
           if (contains(index, mappings)) {
-            cerr << "Invalid mapping of '" << index << "', it is already previously mapped to another output";
+            cerr << "Invalid mapping of '" << index << "' (it is already previously mapped to another input)";
             return INVALID_ROTOR_MAPPING;
           }
         } else {
