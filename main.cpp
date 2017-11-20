@@ -169,13 +169,7 @@ int main(int argc, char** argv){
 
     // define each component
     if (ext == "pb") {
-      // cout << "In main: passing ";
-      // print_vector(mappings);
-      // cout <<  " to plugboard" << endl;
       plugboard = Plugboard(mappings);
-      // cout << "In main: created plugboard with mapping ";
-      // print_vector(plugboard.get_mappings());
-      // cout << endl;
 
     } else if (ext == "rf") {
       reflector = Reflector(mappings);
